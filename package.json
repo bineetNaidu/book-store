@@ -1,0 +1,15 @@
+{
+  "name": "book-store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": "https://github.com/bineetNaidu/book-store.git",
+  "author": "BineetNaidu <bineetnaiduapps@gmail.com> (https://bineetnaidu.github.io)",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
