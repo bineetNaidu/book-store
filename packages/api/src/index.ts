@@ -4,7 +4,6 @@ import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/Hello';
 import { ___prod___ } from './utils/contants';
-import { TweetResolvers } from './resolvers/tweets';
 import { createTypeORMConnection } from './utils/createTypeORMConnection';
 
 dotenv.config();
@@ -23,7 +22,7 @@ const bootstrap = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [HelloResolver, TweetResolvers],
+      resolvers: [HelloResolver],
     }),
   });
 
