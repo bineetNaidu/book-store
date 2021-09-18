@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
-import { HelloResolver } from './resolvers/Hello';
+import path from 'path';
 import { ___prod___ } from './utils/contants';
 import { createTypeORMConnection } from './utils/createTypeORMConnection';
 
@@ -22,7 +22,7 @@ const bootstrap = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [HelloResolver],
+      resolvers: [path.join(__dirname, './resolvers/**.ts')],
     }),
   });
 
