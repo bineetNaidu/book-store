@@ -24,6 +24,7 @@ const bootstrap = async () => {
       validate: false,
       resolvers: [path.join(__dirname, './resolvers/**.ts')],
     }),
+    cors: false,
   });
 
   server.listen().then(({ url }) => {
