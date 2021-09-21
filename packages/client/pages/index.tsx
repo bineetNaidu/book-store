@@ -1,15 +1,6 @@
 import Navbar from '../components/Navbar';
 import Container from '../components/Container';
-import styled from 'styled-components';
 import { Wrapper } from '../components/Wrapper';
-
-const BookWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fafafa;
-  padding: 20px;
-`;
 
 const Index = () => {
   return (
