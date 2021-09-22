@@ -19,6 +19,8 @@ const bootstrap = async () => {
     throw new Error('Database Connection has not been established yet!');
   }
 
+  await conn.runMigrations();
+
   const server = new ApolloServer({
     schema: await buildSchema({
       validate: false,

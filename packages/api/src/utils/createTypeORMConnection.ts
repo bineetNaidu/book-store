@@ -16,5 +16,6 @@ export const createTypeORMConnection = async () => {
     logging: true,
     synchronize: true,
     entities: [path.join(__dirname, '../entities/**.ts')],
+    migrations: [path.join(__dirname, '../migrations/**.ts')],
   });
 };
