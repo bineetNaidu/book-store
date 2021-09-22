@@ -22,11 +22,15 @@ export class Book extends BaseEntity {
   @Column()
   name!: string;
 
+  @Field()
+  @Column()
+  avatar!: string;
+
   @ManyToOne(() => Author, (a) => a.id)
   author!: string;
 
   @Field()
-  @Column()
+  @Column({ type: 'varchar', length: 1000 })
   description!: string;
 
   @ManyToOne(() => Genre, (g) => g.id)
