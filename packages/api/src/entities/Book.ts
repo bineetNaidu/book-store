@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  PrimaryColumn,
 } from 'typeorm';
 import { Author } from './Author';
 import { Genre } from './Genre';
@@ -29,12 +30,18 @@ export class Book extends BaseEntity {
   @ManyToOne(() => Author, (a) => a.id)
   author!: number;
 
+  @PrimaryColumn()
+  authorId: number;
+
   @Field()
   @Column({ type: 'varchar', length: 1000 })
   description!: string;
 
   @ManyToOne(() => Genre, (g) => g.id)
   genre!: Genre;
+
+  @PrimaryColumn()
+  genreId: number;
 
   @Field()
   @Column()
