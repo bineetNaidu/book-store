@@ -8,4 +8,12 @@ fragment BaseBook on Book {
   publish_date
   createdAt
   updatedAt
+  genre {
+    id
+    name
+  }
+  author {
+    id
+    name
+  }
 }

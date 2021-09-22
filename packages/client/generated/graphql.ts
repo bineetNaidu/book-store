@@ -26,13 +26,15 @@ export type Author = {
 
 export type Book = {
   __typename?: 'Book';
+  author: Author;
   avatar: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   discount_price: Scalars['Float'];
+  genre: Genre;
   id: Scalars['Float'];
   name: Scalars['String'];
-  publish_date: Scalars['Float'];
+  publish_date: Scalars['String'];
   rent_price: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
 };
@@ -109,7 +111,7 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
-export type BaseBookFragment = { __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any };
+export type BaseBookFragment = { __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: string, createdAt: any, updatedAt: any, genre: { __typename?: 'Genre', id: number, name: string }, author: { __typename?: 'Author', id: number, name: string } };
 
 export type BaseUserFragment = { __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any };
 
@@ -133,12 +135,12 @@ export type BookQueryVariables = Exact<{
 }>;
 
 
-export type BookQuery = { __typename?: 'Query', book?: Maybe<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any }> };
+export type BookQuery = { __typename?: 'Query', book?: Maybe<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: string, createdAt: any, updatedAt: any, genre: { __typename?: 'Genre', id: number, name: string }, author: { __typename?: 'Author', id: number, name: string } }> };
 
 export type BooksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type BooksQuery = { __typename?: 'Query', books: Array<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any }> };
+export type BooksQuery = { __typename?: 'Query', books: Array<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: string, createdAt: any, updatedAt: any, genre: { __typename?: 'Genre', id: number, name: string }, author: { __typename?: 'Author', id: number, name: string } }> };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['Float'];
@@ -163,6 +165,14 @@ export const BaseBookFragmentDoc = gql`
   publish_date
   createdAt
   updatedAt
+  genre {
+    id
+    name
+  }
+  author {
+    id
+    name
+  }
 }
     `;
 export const BaseUserFragmentDoc = gql`
