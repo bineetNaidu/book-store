@@ -1,0 +1,5 @@
+query Book($id: Float!) {
+  book(id: $id) {
+    ...BaseBook
+  }
+}

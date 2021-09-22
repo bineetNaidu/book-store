@@ -1,0 +1,11 @@
+fragment BaseBook on Book {
+  id
+  name
+  avatar
+  description
+  rent_price
+  discount_price
+  publish_date
+  createdAt
+  updatedAt
+}

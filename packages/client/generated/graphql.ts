@@ -26,6 +26,7 @@ export type Author = {
 
 export type Book = {
   __typename?: 'Book';
+  avatar: Scalars['String'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   discount_price: Scalars['Float'];
@@ -69,10 +70,17 @@ export type MutationRegisterArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  book?: Maybe<Book>;
+  books: Array<Book>;
   hello: Scalars['String'];
   info: Scalars['String'];
   user?: Maybe<User>;
   users: Array<User>;
+};
+
+
+export type QueryBookArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -101,6 +109,8 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type BaseBookFragment = { __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any };
+
 export type BaseUserFragment = { __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any };
 
 export type LoginMutationVariables = Exact<{
@@ -118,6 +128,18 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any }> } };
 
+export type BookQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type BookQuery = { __typename?: 'Query', book?: Maybe<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any }> };
+
+export type BooksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type BooksQuery = { __typename?: 'Query', books: Array<{ __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: number, createdAt: any, updatedAt: any }> };
+
 export type UserQueryVariables = Exact<{
   id: Scalars['Float'];
 }>;
@@ -130,6 +152,19 @@ export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any }> };
 
+export const BaseBookFragmentDoc = gql`
+    fragment BaseBook on Book {
+  id
+  name
+  avatar
+  description
+  rent_price
+  discount_price
+  publish_date
+  createdAt
+  updatedAt
+}
+    `;
 export const BaseUserFragmentDoc = gql`
     fragment BaseUser on User {
   id
@@ -218,6 +253,75 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const BookDocument = gql`
+    query Book($id: Float!) {
+  book(id: $id) {
+    ...BaseBook
+  }
+}
+    ${BaseBookFragmentDoc}`;
+
+/**
+ * __useBookQuery__
+ *
+ * To run a query within a React component, call `useBookQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBookQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBookQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useBookQuery(baseOptions: Apollo.QueryHookOptions<BookQuery, BookQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BookQuery, BookQueryVariables>(BookDocument, options);
+      }
+export function useBookLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BookQuery, BookQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BookQuery, BookQueryVariables>(BookDocument, options);
+        }
+export type BookQueryHookResult = ReturnType<typeof useBookQuery>;
+export type BookLazyQueryHookResult = ReturnType<typeof useBookLazyQuery>;
+export type BookQueryResult = Apollo.QueryResult<BookQuery, BookQueryVariables>;
+export const BooksDocument = gql`
+    query Books {
+  books {
+    ...BaseBook
+  }
+}
+    ${BaseBookFragmentDoc}`;
+
+/**
+ * __useBooksQuery__
+ *
+ * To run a query within a React component, call `useBooksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBooksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBooksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useBooksQuery(baseOptions?: Apollo.QueryHookOptions<BooksQuery, BooksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BooksQuery, BooksQueryVariables>(BooksDocument, options);
+      }
+export function useBooksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BooksQuery, BooksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BooksQuery, BooksQueryVariables>(BooksDocument, options);
+        }
+export type BooksQueryHookResult = ReturnType<typeof useBooksQuery>;
+export type BooksLazyQueryHookResult = ReturnType<typeof useBooksLazyQuery>;
+export type BooksQueryResult = Apollo.QueryResult<BooksQuery, BooksQueryVariables>;
 export const UserDocument = gql`
     query User($id: Float!) {
   user(id: $id) {
