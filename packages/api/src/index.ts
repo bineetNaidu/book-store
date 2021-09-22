@@ -24,7 +24,10 @@ const bootstrap = async () => {
       validate: false,
       resolvers: [path.join(__dirname, './resolvers/**.ts')],
     }),
-    cors: false,
+    cors: {
+      origin: '*',
+      credentials: true,
+    },
   });
 
   server.listen().then(({ url }) => {
