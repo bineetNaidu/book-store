@@ -27,7 +27,7 @@ export class Book extends BaseEntity {
   avatar!: string;
 
   @ManyToOne(() => Author, (a) => a.id)
-  author!: string;
+  author!: number;
 
   @Field()
   @Column({ type: 'varchar', length: 1000 })
@@ -46,7 +46,7 @@ export class Book extends BaseEntity {
 
   @Field()
   @Column({ type: 'date', default: 'now()' })
-  publish_date!: number;
+  publish_date!: string;
 
   @Field()
   @CreateDateColumn()
