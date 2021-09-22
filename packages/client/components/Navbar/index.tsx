@@ -10,7 +10,7 @@ import { useUserStore } from '../../lib/user.store';
 interface Props {}
 
 const Navbar: FC<Props> = () => {
-  const user = useUserStore((s) => s.user);
+  const { user, logout } = useUserStore((s) => s);
 
   return (
     <Nav>
@@ -27,7 +27,7 @@ const Navbar: FC<Props> = () => {
           <FlexWrapper flex={1}>
             <Button>@{user.username}</Button>
             <LineBreaker>|</LineBreaker>
-            <Button>Logout</Button>
+            <Button onClick={logout}>Logout</Button>
           </FlexWrapper>
         ) : (
           <FlexWrapper flex={1}>
