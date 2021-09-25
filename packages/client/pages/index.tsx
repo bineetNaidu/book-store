@@ -2,13 +2,15 @@ import Head from 'next/head';
 import Navbar from '../components/Navbar';
 import Container from '../components/Container';
 import { Wrapper } from '../components/Wrapper';
-import { useBooksQuery } from '../generated/graphql';
+import { useBooksQuery, useAuthorsQuery } from '../generated/graphql';
 import { withApollo } from '../lib/withApollo';
 import BookCard from '../components/BookCard';
+import AuthorCard from '../components/AuthorCard';
 
 const Index = () => {
   const { data, loading, error } = useBooksQuery();
-  if (loading) {
+  const { data: authorsData, loading: authorsLoading } = useAuthorsQuery();
+  if (loading || authorsLoading) {
     return <p>Loading...</p>;
   }
   if (error) {
@@ -22,13 +24,22 @@ const Index = () => {
       <Navbar />
       <Container marginTop="55px">
         <h1>Welcome to Our EBook Store</h1>
-        <Wrapper>
-          <Wrapper flex={2}>
+        <Wrapper justifyContent="space-around">
+          <Wrapper flex={2} flexDirection="column">
             <h3>Author of the week</h3>
-            {/* List of Author of the week */}
+
+            {authorsData?.authors.map((a) => (
+              <AuthorCard author={a} key={a.id} />
+            ))}
           </Wrapper>
 
-          <Wrapper flex={6.5} flexDirection="column">
+          <Wrapper
+            flex={7}
+            flexDirection="column"
+            style={{
+              paddingLeft: '2.5rem',
+            }}
+          >
             <h3>Books of the week</h3>
 
             <Wrapper flexWrap="wrap">
@@ -36,12 +47,6 @@ const Index = () => {
                 <BookCard book={book} key={book.id} />
               ))}
             </Wrapper>
-          </Wrapper>
-
-          <Wrapper flex={1.5}>
-            <h3>Ads</h3>
-
-            {/*List of Books  */}
           </Wrapper>
         </Wrapper>
       </Container>
