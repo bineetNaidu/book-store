@@ -1,0 +1,5 @@
+query Author($id: Float!) {
+  author(id: $id) {
+    ...BaseAuthor
+  }
+}

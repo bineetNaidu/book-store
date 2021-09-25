@@ -1,0 +1,6 @@
+fragment BaseAuthor on Author {
+  id
+  name
+  createdAt
+  updatedAt
+}

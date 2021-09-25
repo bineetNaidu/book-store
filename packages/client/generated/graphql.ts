@@ -72,12 +72,19 @@ export type MutationRegisterArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  author?: Maybe<Author>;
+  authors: Array<Author>;
   book?: Maybe<Book>;
   books: Array<Book>;
   hello: Scalars['String'];
   info: Scalars['String'];
   user?: Maybe<User>;
   users: Array<User>;
+};
+
+
+export type QueryAuthorArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -111,6 +118,8 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type BaseAuthorFragment = { __typename?: 'Author', id: number, name: string, createdAt: any, updatedAt: any };
+
 export type BaseBookFragment = { __typename?: 'Book', id: number, name: string, avatar: string, description: string, rent_price: number, discount_price: number, publish_date: string, createdAt: any, updatedAt: any, genre: { __typename?: 'Genre', id: number, name: string }, author: { __typename?: 'Author', id: number, name: string } };
 
 export type BaseUserFragment = { __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any };
@@ -129,6 +138,18 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Maybe<Array<{ __typename?: 'FieldError', field: string, message: string }>>, user?: Maybe<{ __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any }> } };
+
+export type AuthorQueryVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type AuthorQuery = { __typename?: 'Query', author?: Maybe<{ __typename?: 'Author', id: number, name: string, createdAt: any, updatedAt: any }> };
+
+export type AuthorsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AuthorsQuery = { __typename?: 'Query', authors: Array<{ __typename?: 'Author', id: number, name: string, createdAt: any, updatedAt: any }> };
 
 export type BookQueryVariables = Exact<{
   id: Scalars['Float'];
@@ -154,6 +175,14 @@ export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string, email: string, createdAt: any, updatedAt: any }> };
 
+export const BaseAuthorFragmentDoc = gql`
+    fragment BaseAuthor on Author {
+  id
+  name
+  createdAt
+  updatedAt
+}
+    `;
 export const BaseBookFragmentDoc = gql`
     fragment BaseBook on Book {
   id
@@ -263,6 +292,75 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const AuthorDocument = gql`
+    query Author($id: Float!) {
+  author(id: $id) {
+    ...BaseAuthor
+  }
+}
+    ${BaseAuthorFragmentDoc}`;
+
+/**
+ * __useAuthorQuery__
+ *
+ * To run a query within a React component, call `useAuthorQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuthorQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAuthorQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAuthorQuery(baseOptions: Apollo.QueryHookOptions<AuthorQuery, AuthorQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AuthorQuery, AuthorQueryVariables>(AuthorDocument, options);
+      }
+export function useAuthorLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AuthorQuery, AuthorQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AuthorQuery, AuthorQueryVariables>(AuthorDocument, options);
+        }
+export type AuthorQueryHookResult = ReturnType<typeof useAuthorQuery>;
+export type AuthorLazyQueryHookResult = ReturnType<typeof useAuthorLazyQuery>;
+export type AuthorQueryResult = Apollo.QueryResult<AuthorQuery, AuthorQueryVariables>;
+export const AuthorsDocument = gql`
+    query Authors {
+  authors {
+    ...BaseAuthor
+  }
+}
+    ${BaseAuthorFragmentDoc}`;
+
+/**
+ * __useAuthorsQuery__
+ *
+ * To run a query within a React component, call `useAuthorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuthorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAuthorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAuthorsQuery(baseOptions?: Apollo.QueryHookOptions<AuthorsQuery, AuthorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AuthorsQuery, AuthorsQueryVariables>(AuthorsDocument, options);
+      }
+export function useAuthorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AuthorsQuery, AuthorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AuthorsQuery, AuthorsQueryVariables>(AuthorsDocument, options);
+        }
+export type AuthorsQueryHookResult = ReturnType<typeof useAuthorsQuery>;
+export type AuthorsLazyQueryHookResult = ReturnType<typeof useAuthorsLazyQuery>;
+export type AuthorsQueryResult = Apollo.QueryResult<AuthorsQuery, AuthorsQueryVariables>;
 export const BookDocument = gql`
     query Book($id: Float!) {
   book(id: $id) {
